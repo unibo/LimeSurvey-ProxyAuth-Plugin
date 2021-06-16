@@ -29,7 +29,10 @@ N.B. In production, to avoid people compiling the surveys using such extension, 
 - Clone this repository inside the plugin directory of your LimeSurvey installation
 
 ## Docker
-- This plugin also contains a docker folder. It is used to develop and it is made of nginx -> php-fpm -> mariadb
+This plugin also contains a docker folder. It is used to develop and it is made of nginx -> php-fpm -> mariadb.  
+Please remember to change the database password if using on production.  
+TODO: Put all environment dependend parameters like domain and DB password in an .env file that will be in the .gitignore. Push a .env.example instead.
+
 
 ## Notes: 
 - This plugin only does its magic on survey with specified participants, it does nothing in open participants surveys.
