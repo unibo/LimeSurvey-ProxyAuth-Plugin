@@ -33,15 +33,16 @@ This plugin also contains a docker folder. We used docker-compose for developmen
 You can find all the settings inside the .env.dev template; please remember to change the database password if using on production.  
 
 ### Installation
-To use this docker-compose:
-- Create a foldet with the name of your project where you prefere
-- Download latest limesurvey version in a folder named www (or the way you like modifying PHP_DIRECTORY and WEB_DIRECTORY)
-- git clone this repository inside the www/plugins subdirectory
-- ln -s www/plugins/UniboGroupsAuth/docker-compose.yml inside your project folder
-- ln -s www/plugins/UniboGroupsAuth/config inside your project folder
-- cp www/plugins/UniboGroupsAuth/.env.dev inside your project folder and rename it .env
-- Edit the .env file and modify the environment variable you want to change
-- launch docker-compose up -d from inside your project folder
+To use this docker-compose:  
+- Create a foldet with the name of your project where you prefere  
+- Download latest limesurvey version in a folder named www (or the way you like modifying PHP_DIRECTORY and WEB_DIRECTORY)  
+- git clone this repository inside the www/plugins subdirectory  
+- ln -s www/plugins/UniboGroupsAuth/docker-compose.yml inside your project folder  
+- ln -s www/plugins/UniboGroupsAuth/config inside your project folder  
+- cp www/plugins/UniboGroupsAuth/.env.dev inside your project folder and rename it .env  
+- Edit the .env file and modify the environment variable you want to change  
+- mkdir www/tmp/sessions; chown www-data www/ -R  
+- launch docker-compose up -d from inside your project folder  
 
 
 ## Notes: 
