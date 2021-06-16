@@ -8,7 +8,7 @@ A simple LimeSurvey plugin to Automatically add participants to a survay based o
 **LimeSurvey compatibility**: 4.X , 5.X
 
 ## Headers structure:
-The only required headers to make the authorization process work are X-Remote-User
+The only required headers to make the authorization process work are X-Remote-User and X-Remote-Groups.  
 Headers could, and in our case are, added by the proxy after verifying the user is authenticated using an apache plugin.
 
 ## How to test this plugin:
@@ -16,11 +16,11 @@ In production you will better have some authentication in place on the proxy and
 N.B. In production, to avoid people compiling the surveys using such extension, it is required to remove those headers from requests before running the auth plugin that eventually adds them back with the right contents.
 
 ## Plugin configurations:
-- **Key to use for username**: Header key to check in $_SERVER to retrive the username (defaults to HTTP_X_REMOTE_USER)
-- **Key to use for email**: Header key to check in $_SERVER to retrive the email (defaults to HTTP_X_REMOTE_EMAIL)
-- **Key to use for groups**: Header key to check in $_SERVER to retrive the comma separated groups (defaults to HTTP_X_REMOTE_GROUPS)
-- **Key to use for first name**: Header key to check in $_SERVER to retrive the first name (defaults to HTTP_X_REMOTE_FIRSTNAME)
-- **Key to use for last name**: Header key to check in $_SERVER to retrive the last name (deafults to HTTP_X_REMOTE_LASTNAME)
+- **Key to use for username**: Header key to check in $_SERVER to retrive the username (defaults to HTTP_X_REMOTE_USER)  
+- **Key to use for email**: Header key to check in $_SERVER to retrive the email (defaults to HTTP_X_REMOTE_EMAIL)  
+- **Key to use for groups**: Header key to check in $_SERVER to retrive the comma separated groups (defaults to HTTP_X_REMOTE_GROUPS)  
+- **Key to use for first name**: Header key to check in $_SERVER to retrive the first name (defaults to HTTP_X_REMOTE_FIRSTNAME)  
+- **Key to use for last name**: Header key to check in $_SERVER to retrive the last name (deafults to HTTP_X_REMOTE_LASTNAME)  
 
 ## Survey additional configuration:
 - **Group names**: The comma separated list of allowed groups to compile this specific survey (defaults to empty). If empty it will always ask for a token.
