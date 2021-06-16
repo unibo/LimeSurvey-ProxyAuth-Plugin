@@ -1,10 +1,10 @@
 # UniboGroupsAuth - LimeSurvey Plugin
 A simple LimeSurvey plugin to Automatically add participants to a survay based on header info.
 
-**Author**: Matteo Parrucci
+**Author**: Matteo Parrucci  
 **Email**: m.parrucci@unibo.it  
 **Website**: https://www.github.com/unibo  
-**Licence**: BSD 3-Clause
+**Licence**: BSD 3-Clause  
 **LimeSurvey compatibility**: 4.X , 5.X
 
 ## Headers structure:
@@ -12,7 +12,7 @@ The only required headers to make the authorization process work are X-Remote-Us
 Headers could, and in our case are, added by the proxy after verifying the user is authenticated using an apache plugin.
 
 ## How to test this plugin:
-In production you will better have some authentication in place on the proxy and add the required headers in order to make it work but in development you can also use a chrome extension like ModHeader that let you set your own headers.
+In production you will better have some authentication in place on the proxy and add the required headers in order to make it work but in development you can also use a chrome extension like ModHeader that let you set your own headers.  
 N.B. In production, to avoid people compiling the surveys using such extension, it is required to remove those headers from requests before running the auth plugin that eventually adds them back with the right contents.
 
 ## Plugin configurations:
