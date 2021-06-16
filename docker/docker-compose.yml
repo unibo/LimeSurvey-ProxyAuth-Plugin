@@ -1,0 +1,36 @@
+version: '2'
+services:
+  db:
+    image: mariadb:latest
+    volumes:
+      - "./db:/var/lib/mysql"
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: XCMnjTWMWYJWxwCPeJ6PHGMN4QeYRxZc
+      MYSQL_DATABASE: limesurvey
+      MYSQL_USER: limesurvey
+      MYSQL_PASSWORD: Gdqh45kjwwzny648yeF5QNHN44bMjCXV
+
+  php8:
+    depends_on:
+      - db
+    build:
+      context: ./config
+      dockerfile: php.dockerfile
+    image: php8:fpm
+    volumes:
+      - ./www:/var/www/html
+      - ./config/php.www.conf:/usr/local/etc/php-fpm.d/zzz-php.conf
+      - ./config/php.override.ini:/usr/local/etc/php/conf.d/override.ini
+    restart: always
+
+  web:
+    depends_on:
+      - php8
+    image: nginx:latest
+    ports:
+      - "127.0.0.1:7000:80"
+    volumes:
+      - ./config/nginx.internal.conf:/etc/nginx/conf.d/default.conf
+      - ./www:/var/www/html
+    restart: always
