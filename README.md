@@ -7,13 +7,20 @@ A simple LimeSurvey plugin to Automatically add participants to a survay based o
 **Licence**: BSD 3-Clause  
 **LimeSurvey compatibility**: 4.X , 5.X
 
+## Description
+Limesurvey allows editors to setup two kinds of surveys:
+- **Open surveys** that allows everybody that knows the web address to fill the survey
+- **Closed surveys** that allow only invited users to fill the survey. Limesurvey gives the tools to invite users by mail assigning them a unique token
+
+This plugin allows every user that has some configurable headers in the request (coming from authentication extension) to fill **closed** surveys.
+
 ## Headers structure:
 The only required headers to make the authorization process work are X-Remote-User and X-Remote-Groups.  
 Headers could, and in our case are, added by the proxy after verifying the user is authenticated using an apache plugin.
 
 ## How to test this plugin:
 In production you will better have some authentication in place on the proxy and add the required headers in order to make it work but in development you can also use a chrome extension like ModHeader that let you set your own headers.  
-N.B. In production, to avoid people compiling the surveys using such extension, it is required to remove those headers from requests before running the auth plugin that eventually adds them back with the right contents.
+N.B. In production, to avoid people filling the surveys using such extension, it is required to remove those headers from requests before running the auth plugin that eventually adds them back with the right contents.
 
 ## Plugin configurations:
 - **Key to use for username**: Header key to check in $_SERVER to retrive the username (defaults to HTTP_X_REMOTE_USER)  
@@ -23,7 +30,7 @@ N.B. In production, to avoid people compiling the surveys using such extension, 
 - **Key to use for last name**: Header key to check in $_SERVER to retrive the last name (deafults to HTTP_X_REMOTE_LASTNAME)  
 
 ## Survey additional configuration:
-- **Group names**: The comma separated list of allowed groups to compile this specific survey (defaults to empty). If empty it will always ask for a token.
+- **Group names**: The comma separated list of allowed groups to fill this specific survey (defaults to empty). If empty it will always ask for a token.
 
 ## Installation instructions:
 - Clone this repository inside the plugin directory of your LimeSurvey installation
