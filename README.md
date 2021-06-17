@@ -7,7 +7,7 @@ A simple LimeSurvey plugin to Automatically add participants to a survay based o
 **Licence**: BSD 3-Clause  
 **LimeSurvey compatibility**: 4.X , 5.X
 
-## Description
+## Description:
 Limesurvey allows editors to setup two kinds of surveys:
 - **Open surveys** that allows everybody that knows the web address to fill the survey
 - **Closed surveys** that allow only invited users to fill the survey. Limesurvey gives the tools to invite users by mail assigning them a unique token
@@ -46,11 +46,28 @@ To use this docker-compose:
 - git clone this repository inside the www/plugins subdirectory  
 - ln -s www/plugins/UniboGroupsAuth/docker-compose.yml inside your project folder  
 - ln -s www/plugins/UniboGroupsAuth/config inside your project folder  
-- cp www/plugins/UniboGroupsAuth/.env.dev inside your project folder and rename it .env  
-- Edit the .env file and modify the environment variable you want to change  
+- cp www/plugins/UniboGroupsAuth/.env.template inside your project folder and rename it .env  
+- Edit the .env file and modify the environment variable you want to change (Please remember to change the DB passwords)  
 - mkdir www/tmp/sessions; chown www-data www/ -R  
 - launch docker-compose up -d from inside your project folder  
+- go to the selected 
 
+### Reverse proxying
+If you are planning to use nginx as reverse proxy you can use nginx.external.conf as a starting point as follows  
+- cp config/nginx.external.conf /etc/nginx/sites-available/HOSTNAME.conf (replace HOSTNAME with your hostname)
+- edit /etc/nginx/sites-available/HOSTNAME.conf to your taste
+- ln -s /etc/nginx/sites-available/HOSTNAME.conf /etc/nginx/sites-enabled/HOSTNAME.conf
+If you are planning to use other means all you need to know is that php-fpm is listening on 127.0.0.1:7000
+
+## Repository structure:
+The repository structure is self-explanatory; there is:
+- a docker folder containing the docker-compose file and a config folder containing the docker configuration files
+- a docs folder containing the readme screenshots
+- a composer.json file that contains the plugin info in a machine readable format
+- a config.xml file that contains the informations used by LimeSurvey in the plugin page
+- a LICENCE file containg the full text of the licence
+- a UniboGroupsAuth.php file that contains the plugin code
+- this README.md file
 
 ## Notes: 
 - This plugin only does its magic on survey with specified participants, it does nothing in open participants surveys.
