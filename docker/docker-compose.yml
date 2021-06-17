@@ -21,7 +21,7 @@ services:
       dockerfile: php.dockerfile
     image: php8:${PHP_TAG}
     volumes:
-      - ${PHP_DIRECTORY}:/var/www/html
+      - ${WEB_DIRECTORY}:/var/www/html
       - ./config/php.www.conf:/usr/local/etc/php-fpm.d/zzz-php.conf
       - ./config/php.override.ini:/usr/local/etc/php/conf.d/override.ini
     restart: always
