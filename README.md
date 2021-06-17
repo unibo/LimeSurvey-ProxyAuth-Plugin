@@ -30,7 +30,7 @@ N.B. In production, to avoid people compiling the surveys using such extension, 
 
 ## Docker
 This plugin also contains a docker folder. We used docker-compose for development and the stack is made of nginx -> php-fpm -> mariadb.  
-You can find all the settings inside the .env.dev template; please remember to change the database password if using on production.  
+You can find all the settings inside the .env.template; please remember to change the database password if using on production.  
 
 ### Installation
 To use this docker-compose:  
