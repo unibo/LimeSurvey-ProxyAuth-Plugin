@@ -41,7 +41,6 @@ class UniboGroupsAuth extends PluginBase {
         $this->subscribe('beforeSurveySettings');
         $this->subscribe('newSurveySettings');
         $this->subscribe('beforeSurveyPage');
-        //$this->subscribe('beforeHasPermission');
     }
 
     /**
@@ -87,12 +86,17 @@ class UniboGroupsAuth extends PluginBase {
         return $aGroups;
     }
 
+    private function getSettingOrDefault($settingsName)
+    {
+        return $this->get($settingsName, null, null, $this->settings[$settingsName]['default']);
+    }
+
     private function getUserDetails()
     {
-        $sUserHeader = $this->get('userHeader');
-        $sEmailHeader = $this->get('emailHeader');
-        $sFirstNameHeader = $this->get('firstNameHeader');
-        $sLastNameHeader = $this->get('lastNameHeader');
+        $sUserHeader = $this->getSettingOrDefault('userHeader');
+        $sEmailHeader = $this->getSettingOrDefault('emailHeader');
+        $sFirstNameHeader = $this->getSettingOrDefault('firstNameHeader');
+        $sLastNameHeader = $this->getSettingOrDefault('lastNameHeader');
         $sUser = $_SERVER[$sUserHeader] ?? '';
         $sEmail = $_SERVER[$sEmailHeader] ?? $sUser;
         $sFirstName = $_SERVER[$sFirstNameHeader] ?? '';
@@ -137,9 +141,11 @@ class UniboGroupsAuth extends PluginBase {
         return $token;
     }
 
-    private function log_obj($obj)
+    private function printLog($obj)
     {
-        error_log(print_r($obj, false));
+	print("<pre>");
+	print_r($obj);
+	print("</pre>");
     }
 
     public function beforeSurveyPage()
@@ -148,18 +154,19 @@ class UniboGroupsAuth extends PluginBase {
         $iSurveyId = $oEvent->get('surveyId');
         $oSurvey = Survey::model()->findByPk($iSurveyId);
         $token = trim($_REQUEST["token"] ?? '');
+	//TODO: Better understand what is previewmode and how it fits the equation
         //$previewmode = Yii::app()->getConfig('previewmode');
         $previewmode = false;
-        if ($oSurvey->hasTokensTable && tableExists("{{tokens_" . $iSurveyId . "}}") && (!isset($token) || $token == "") && !$previewmode) {
+	if ($oSurvey->hasTokensTable && tableExists("{{tokens_" . $iSurveyId . "}}") && (!isset($token) || $token == "") && !$previewmode) {
             $sGroupsRequired = $this->get('groupRequired', 'Survey', $iSurveyId);
             // No required groups for this survey = no automatic token creation
             if(is_null($sGroupsRequired)) return;
-            $sGroupHeader = $this->get('groupsHeader');
+            $sGroupHeader = $this->getSettingOrDefault('groupsHeader');
             $Groups = $this->groupsFromString($_SERVER[$sGroupHeader] ?? '');
             foreach ($this->groupsFromString($sGroupsRequired) as $sGroupRequired)
-            {
+	    {
                 if (in_array($sGroupRequired, $Groups))
-                {
+		{
                     $aParticipant = $this->getUserDetails();
                     // If no partecipant in headers skip automatic token creation
                     if (!isset($aParticipant)) return;
@@ -173,54 +180,18 @@ class UniboGroupsAuth extends PluginBase {
                     }
                     $token = $oToken->token;
                     // User not created automaticaly
-                    // TODO Si potrebbe generare, da verificare se basta $token->generateToken();
+                    // TODO We could generate, need to verify if $token->generateToken(); is enough
                     if (!isset($token)) return;
                     $params = array_merge( $_GET, array( 'token' => $token));
                     $new_query_string = http_build_query( $params );
                     session_destroy();
                     header("Location:.?" . $new_query_string);
-                    exit;
+                    exit(0);
                     
                 }
             }
         }
     }
-
-
-    /**
-    * Check groups and decide wether to grant access or not
-    * @return boolean | bPermission
-    */
-    // public function beforeHasPermission()
-    // { 
-    //     $oEvent = $this->getEvent();
-    //     $sEntityName = $oEvent->get('sEntityName');
-    //     $iEntityID = $oEvent->get('iEntityID');
-    //     $sPermission = $oEvent->get('sPermission');
-    //     $sCRUD = $oEvent->get('sCRUD');
-        //     error_log("Checking permission $sPermission $sCRUD on $sEntityName $iEntityID");
-        //     $this->log("Checking permission $sPermission $sCRUD on $sEntityName $iEntityID", CLogger::LEVEL_ERROR);
-        // Overrule default permission returning always True
-        // if ($sEntityName != "survey")return null;
-        // if ($sPermission != "token")return null;
-        // if ($sCRUD != "create")return null;
-        // return True
-
-
-    //     if ($sEntityName != "survey")return null;
-    //     if ($sPermission != "surveycontent")return null;
-    //     if ($sCRUD != "update")return null;
-    //     $sGroupsRequired = $this->get('groupRequired', 'Survey', $iSurveyId);
-    //     if(is_null($sGroupsRequired)) return null;
-    //     $sGroupHeader = $this.get('serverkey');
-    //     $sGroups = $this.groupsFromString($sGroupHeader);
-    //     foreach ($this.groupsFromString($sGroupsRequired) as $sGroupRequired) {
-    //         if (in_array($sGroupRequired, $sGroups){
-    //             return True;
-    //         }
-    //     }
-    //     return null;
-    // }
 }
 
 ?>
