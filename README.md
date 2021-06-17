@@ -5,6 +5,7 @@ A simple LimeSurvey plugin to Automatically add participants to a survay based o
 **Email**: m.parrucci@unibo.it  
 **Website**: https://www.github.com/unibo  
 **Licence**: BSD 3-Clause  
+**Licence Owner**: Bologna University (https://www.unibo.it/it)
 **LimeSurvey compatibility**: 4.X , 5.X
 
 ## Description:
@@ -41,7 +42,7 @@ N.B. In production, to avoid people filling the surveys using such extension, it
 This plugin also contains a docker folder. We used docker-compose for development and the stack is made of nginx -> php-fpm -> mariadb.  
 You can find all the settings inside the .env.template; please remember to change the database password if using on production.  
 
-### Installation
+### Installation:
 To use this docker-compose:  
 - Create a foldet with the name of your project where you prefere  
 - Download latest limesurvey version in a folder named www (or the way you like modifying PHP_DIRECTORY and WEB_DIRECTORY)  
@@ -54,12 +55,15 @@ To use this docker-compose:
 - launch docker-compose up -d from inside your project folder  
 - go to the selected 
 
-### Reverse proxying
+### Reverse proxying:
 If you are planning to use nginx as reverse proxy you can use nginx.external.conf as a starting point as follows  
 - cp config/nginx.external.conf /etc/nginx/sites-available/HOSTNAME.conf (replace HOSTNAME with your hostname)
 - edit /etc/nginx/sites-available/HOSTNAME.conf to your taste
 - ln -s /etc/nginx/sites-available/HOSTNAME.conf /etc/nginx/sites-enabled/HOSTNAME.conf
 If you are planning to use other means all you need to know is that php-fpm is listening on 127.0.0.1:7000
+
+### Dependencies:
+This plugin does not have particular dependencies. Well You must have LimeSurvey and an architecture to serve it.
 
 ## Repository structure:
 The repository structure is self-explanatory; there is:
@@ -74,3 +78,10 @@ The repository structure is self-explanatory; there is:
 ## Techincal Notes: 
 - This plugin only does its magic on survey with specified participants, it does nothing in open participants surveys.
 - This plugin dynamically adds a new participants to the survey participant table and assigns them a token before redirecting to the survey with the needed token in querystring.
+
+### Project status:
+Development
+
+### Issues:
+For general issues please feel free to use this repo issue tracker (https://github.com/unibo/LimeSurvey-ProxyAuth-Plugin/issues)
+For security reports please use the email reported on top of this readme in order to avoid public disclosure of an exploitable vulnerability until fixed.
