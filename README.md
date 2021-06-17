@@ -5,7 +5,7 @@ A simple LimeSurvey plugin to Automatically add participants to a survay based o
 **Email**: m.parrucci@unibo.it  
 **Website**: https://www.github.com/unibo  
 **Licence**: BSD 3-Clause  
-**Licence Owner**: Bologna University (https://www.unibo.it/it)
+**Licence Owner**: Bologna University (https://www.unibo.it/it)  
 **LimeSurvey compatibility**: 4.X , 5.X
 
 ## Description:
