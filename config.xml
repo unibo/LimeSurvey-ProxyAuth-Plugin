@@ -6,9 +6,10 @@
         <creationDate>2021-06-09</creationDate>
         <last_update>2021-06-09</last_update>
         <author>Matteo Parrucci</author>
-        <authorUrl>https://unibo.it</authorUrl>
+        <authorEmail>m.parrucci@unibo.it</authorEmail>
+        <authorUrl>https://github.com/unibo/LimeSurvey-ProxyAuth-Plugin</authorUrl>
         <version>0.0.1</version>
-        <license>GNU General Public License version 2 or later</license>
+        <license>BSD 3-Clause License</license>
         <description><![CDATA[Check groups in request headers to infer if user can take part to a survey]]></description>
     </metadata>
 
