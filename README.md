@@ -15,7 +15,15 @@ Limesurvey allows editors to setup two kinds of surveys:
 
 This plugin allows every user that has some configurable groups in the request header to fill **closed** surveys.  
 It also decides based on the same groups contained in the headers, the admin rights of the user.  
-These headers should obviously come from an authentication extension.
+These headers should obviously come from a trusted authentication extension.
+
+### How it works:
+This plugin manages two distinct types of authorization in LimeSurvey: 
+- Administrative authorization: this type of authorization checks that the user belongs to one of the groups enabled for one of the roles (admin, servicedesk and editor). if the user does not exist, he creates it and assigns it the correct role based on the group. In case of admin role the permissions are given directly to the user because they are not supported by roles. The roles are set with default permissions at the first activation of the plugin. The default permissions are as follows:
+    - admin that has all rights
+    - servicedesk that can CRUD users, labelsets, surveysgroups and surveys and R participantpanel and settings.
+    - editor that can U surveys and R labelses
+- Survey authorization: This type of authorization is used to allow users to fill in closed surveys. In this case, our plugin checks if the user belongs to one of the groups enabled for the specific survey and can be set in the survey settings. If so, it creates a survey "participant" with a token and redirects it, with the token, to the fill-in page.
 
 ## Headers structure:
 The only required headers to make the authorization process work are X-Remote-User and X-Remote-Groups.  
