@@ -1,5 +1,5 @@
 # UniboGroupsAuth - LimeSurvey Plugin
-A simple LimeSurvey plugin to Automatically add participants to a survay based on header info.
+A simple LimeSurvey plugin to manage both admin and closed survey participants authorization based on header groups info.
 
 **Author**: Matteo Parrucci  
 **Email**: m.parrucci@unibo.it  
@@ -13,7 +13,9 @@ Limesurvey allows editors to setup two kinds of surveys:
 - **Open surveys** that allows everybody that knows the web address to fill the survey
 - **Closed surveys** that allow only invited users to fill the survey. Limesurvey gives the tools to invite users by mail assigning them a unique token
 
-This plugin allows every user that has some configurable headers in the request (coming from authentication extension) to fill **closed** surveys.
+This plugin allows every user that has some configurable groups in the request header to fill **closed** surveys.  
+It also decides based on the same groups contained in the headers, the admin rights of the user.  
+These headers should obviously come from an authentication extension.
 
 ## Headers structure:
 The only required headers to make the authorization process work are X-Remote-User and X-Remote-Groups.  
@@ -30,6 +32,10 @@ N.B. In production, to avoid people filling the surveys using such extension, it
 - **Key to use for groups**: Header key to check in $_SERVER to retrive the comma separated groups (defaults to HTTP_X_REMOTE_GROUPS)  
 - **Key to use for first name**: Header key to check in $_SERVER to retrive the first name (defaults to HTTP_X_REMOTE_FIRSTNAME)  
 - **Key to use for last name**: Header key to check in $_SERVER to retrive the last name (deafults to HTTP_X_REMOTE_LASTNAME)  
+- **Key to use for language**: Header key to check in $_SERVER to retrive the user language (defaults to HTTP_X_REMOTE_LANGUAGE)  
+- **Administrator groups**: Comma separated list of groups to accept as administators. (defaults to limesurvey_admin)  
+- **ServiceDesk groups**: Comma separated list of groups to accept as service desk. (defaults to limesurvey_servicedesk)  
+- **Editor groups**: Comma separated list of groups to accept as editors. (defaults to limesurvey_editor)  
 
 ## Survey additional configuration:
 ![Survey configuration](docs/screenshots/Screenshot2.png)  
@@ -78,6 +84,7 @@ The repository structure is self-explanatory; there is:
 ## Techincal Notes: 
 - This plugin only does its magic on survey with specified participants, it does nothing in open participants surveys.
 - This plugin dynamically adds a new participants to the survey participant table and assigns them a token before redirecting to the survey with the needed token in querystring.
+- This plugin dinamically adds platform users with admin permissions based on the groups.
 
 ### Project status:
 Development
